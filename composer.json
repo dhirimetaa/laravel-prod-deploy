@@ -1,8 +1,20 @@
 {
-    "name": "rashydhc/laravel-prod-deploy",
+    "name": "dhirimetaa/laravel-prod-deploy",
     "description": "Build prodfiles and deploy Laravel apps to shared hosting via SFTP (Windows-friendly)",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.1",
+    "homepage": "https://github.com/dhirimetaa/laravel-prod-deploy",
+    "support": {
+        "issues": "https://github.com/dhirimetaa/laravel-prod-deploy/issues",
+        "source": "https://github.com/dhirimetaa/laravel-prod-deploy"
+    },
+    "authors": [
+        {
+            "name": "dhirimetaa",
+            "homepage": "https://github.com/dhirimetaa"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "phpseclib/phpseclib": "^3.0"
@@ -15,12 +27,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rashydhc\\ProdDeploy\\": "src/"
+            "Dhirimetaa\\ProdDeploy\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Rashydhc\\ProdDeploy\\Tests\\": "tests/"
+            "Dhirimetaa\\ProdDeploy\\Tests\\": "tests/"
         }
     },
     "scripts": {

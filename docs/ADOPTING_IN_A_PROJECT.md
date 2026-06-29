@@ -89,7 +89,7 @@ ArPOS (`c:\laragon\www\arpos`) ships with local deploy scripts and is **not** mi
 
 ```json
 "repositories": [{ "type": "path", "url": "../laravel-prod-deploy", "options": { "symlink": true } }],
-"require-dev": { "rashydhc/laravel-prod-deploy": "@dev" }
+"require-dev": { "dhirimetaa/laravel-prod-deploy": "@dev" }
 ```
 
 Then follow steps above manually. Existing manifests and `deploy.env` can be reused.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Commands;
+namespace Dhirimetaa\ProdDeploy\Commands;
 
-use Rashydhc\ProdDeploy\Support\Output;
+use Dhirimetaa\ProdDeploy\Support\Output;
 
 final class VendorZipCommand extends Command
 {

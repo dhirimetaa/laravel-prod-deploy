@@ -5,7 +5,7 @@
 From Packagist (when published):
 
 ```bash
-composer require --dev rashydhc/laravel-prod-deploy
+composer require --dev dhirimetaa/laravel-prod-deploy
 ```
 
 ### Local path repository (development)
@@ -22,12 +22,12 @@ If the package lives at `../laravel-prod-deploy` relative to your Laravel app:
         }
     ],
     "require-dev": {
-        "rashydhc/laravel-prod-deploy": "@dev"
+        "dhirimetaa/laravel-prod-deploy": "@dev"
     }
 }
 ```
 
-Then run `composer update rashydhc/laravel-prod-deploy`.
+Then run `composer update dhirimetaa/laravel-prod-deploy`.
 
 ## 2. Initialize deploy config
 
@@ -68,7 +68,7 @@ PROD_SSH_KEY=C:/Users/You/.ssh/id_rsa
 
 ## 4. Optional: Composer script aliases
 
-Merge `vendor/rashydhc/laravel-prod-deploy/stubs/composer-scripts.json` (or copy from the package repo) into your project's `composer.json` `scripts` section.
+Merge `vendor/dhirimetaa/laravel-prod-deploy/stubs/composer-scripts.json` (or copy from the package repo) into your project's `composer.json` `scripts` section.
 
 ## 5. Server one-time setup
 
@@ -128,7 +128,7 @@ vendor/bin/prod-deploy push
 
 1. Push repository to GitHub
 2. Register at [packagist.org](https://packagist.org)
-3. Submit `rashydhc/laravel-prod-deploy`
+3. Submit `dhirimetaa/laravel-prod-deploy`
 4. Tag releases (`v1.0.0`) for stable installs
 
-Consumers then use `composer require --dev rashydhc/laravel-prod-deploy` without a path repository.
+Consumers then use `composer require --dev dhirimetaa/laravel-prod-deploy` without a path repository.

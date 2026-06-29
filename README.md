@@ -5,7 +5,7 @@ Build a production-ready `prodfiles/` staging directory and deploy Laravel appli
 ## Quick start
 
 ```bash
-composer require --dev rashydhc/laravel-prod-deploy
+composer require --dev dhirimetaa/laravel-prod-deploy
 vendor/bin/prod-deploy init
 # Edit deploy/deploy.env with SSH credentials
 vendor/bin/prod-deploy build
@@ -28,7 +28,7 @@ In your Laravel project's `composer.json`:
         }
     ],
     "require-dev": {
-        "rashydhc/laravel-prod-deploy": "@dev"
+        "dhirimetaa/laravel-prod-deploy": "@dev"
     }
 }
 ```
@@ -53,6 +53,10 @@ Copy the snippet from `stubs/composer-scripts.json` into your project's `compose
 - PHP 8.2+
 - [phpseclib](https://phpseclib.com/) (installed via Composer)
 - Bun (default frontend build) or customize `frontend_build` in `deploy/config.php`
+
+## Repository
+
+https://github.com/dhirimetaa/laravel-prod-deploy
 
 ## License
 

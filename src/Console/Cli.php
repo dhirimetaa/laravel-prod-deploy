@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Console;
+namespace Dhirimetaa\ProdDeploy\Console;
 
-use Rashydhc\ProdDeploy\Application;
-use Rashydhc\ProdDeploy\Commands\BuildCommand;
-use Rashydhc\ProdDeploy\Commands\InitCommand;
-use Rashydhc\ProdDeploy\Commands\PushCommand;
-use Rashydhc\ProdDeploy\Commands\PushTargetCommand;
-use Rashydhc\ProdDeploy\Commands\RemoteCommand;
-use Rashydhc\ProdDeploy\Commands\VendorPushCommand;
-use Rashydhc\ProdDeploy\Commands\VendorZipCommand;
-use Rashydhc\ProdDeploy\Commands\VendorZipPushCommand;
+use Dhirimetaa\ProdDeploy\Application;
+use Dhirimetaa\ProdDeploy\Commands\BuildCommand;
+use Dhirimetaa\ProdDeploy\Commands\InitCommand;
+use Dhirimetaa\ProdDeploy\Commands\PushCommand;
+use Dhirimetaa\ProdDeploy\Commands\PushTargetCommand;
+use Dhirimetaa\ProdDeploy\Commands\RemoteCommand;
+use Dhirimetaa\ProdDeploy\Commands\VendorPushCommand;
+use Dhirimetaa\ProdDeploy\Commands\VendorZipCommand;
+use Dhirimetaa\ProdDeploy\Commands\VendorZipPushCommand;
 
 final class Cli
 {

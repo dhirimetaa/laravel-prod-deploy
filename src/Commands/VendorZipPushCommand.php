@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Commands;
+namespace Dhirimetaa\ProdDeploy\Commands;
 
 use phpseclib3\Net\SFTP;
-use Rashydhc\ProdDeploy\Support\Output;
+use Dhirimetaa\ProdDeploy\Support\Output;
 
 final class VendorZipPushCommand extends Command
 {

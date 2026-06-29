@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Support;
+namespace Dhirimetaa\ProdDeploy\Support;
 
 final class Output
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Commands;
+namespace Dhirimetaa\ProdDeploy\Commands;
 
-use Rashydhc\ProdDeploy\Application;
-use Rashydhc\ProdDeploy\DeployKernel;
-use Rashydhc\ProdDeploy\Support\Output;
+use Dhirimetaa\ProdDeploy\Application;
+use Dhirimetaa\ProdDeploy\DeployKernel;
+use Dhirimetaa\ProdDeploy\Support\Output;
 
 abstract class Command
 {

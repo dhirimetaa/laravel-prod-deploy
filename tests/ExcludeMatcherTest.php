@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Tests;
+namespace Dhirimetaa\ProdDeploy\Tests;
 
 final class ExcludeMatcherTest extends TestCaseBase
 {

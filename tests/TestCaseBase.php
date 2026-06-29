@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy\Tests;
+namespace Dhirimetaa\ProdDeploy\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Rashydhc\ProdDeploy\Application;
-use Rashydhc\ProdDeploy\DeployKernel;
+use Dhirimetaa\ProdDeploy\Application;
+use Dhirimetaa\ProdDeploy\DeployKernel;
 
 abstract class TestCaseBase extends TestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy;
+namespace Dhirimetaa\ProdDeploy;
 
 use FilesystemIterator;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Net\SFTP;
 use phpseclib3\Net\SSH2;
-use Rashydhc\ProdDeploy\Support\Output;
+use Dhirimetaa\ProdDeploy\Support\Output;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ZipArchive;

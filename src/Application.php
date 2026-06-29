@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rashydhc\ProdDeploy;
+namespace Dhirimetaa\ProdDeploy;
 
 final class Application
 {
