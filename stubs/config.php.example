@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Optional deploy/config.php — copied by prod-deploy init.
+ * Return an array to override package defaults.
+ */
+return [
+    // 'prodfiles_dir' => 'prodfiles',
+    // 'config_dir' => 'deploy',
+    // 'frontend_build' => ['bun', 'run', 'build'],
+    // 'copy_roots' => ['app', 'bootstrap', 'config', 'database', 'public', 'resources', 'routes', 'storage'],
+    // 'copy_files' => ['artisan', 'composer.json', 'composer.lock'],
+    // 'verify_after_build' => ['vendor/autoload.php', 'public/build/manifest.json'],
+];

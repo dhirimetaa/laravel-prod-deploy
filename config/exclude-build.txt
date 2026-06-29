@@ -1,0 +1,38 @@
+# Dev / tooling
+/tests/
+/node_modules/
+/.cursor/
+/docs/
+/graphify-out/
+/.git/
+/.github/
+/deploy/
+/prodfiles/
+*.md
+phpunit.xml
+pint.json
+vite.config.js
+package.json
+bun.lock
+bun.lockb
+package-lock.json
+
+# Secrets & local env (never in prodfiles)
+.env
+.env.*
+!.env.example
+
+# Local DB
+/database/*.sqlite*
+
+# Runtime / cache (rebuilt on server)
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+/bootstrap/cache/*.php
+/public/hot
+
+# Factories not needed on server
+/database/factories/

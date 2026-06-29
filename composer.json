@@ -1,0 +1,31 @@
+{
+    "name": "rashydhc/laravel-prod-deploy",
+    "description": "Build prodfiles and deploy Laravel apps to shared hosting via SFTP (Windows-friendly)",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "phpseclib/phpseclib": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "bin": [
+        "bin/prod-deploy"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rashydhc\\ProdDeploy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rashydhc\\ProdDeploy\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

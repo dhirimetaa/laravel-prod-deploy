@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Rashydhc\ProdDeploy\Commands;
+
+use Rashydhc\ProdDeploy\Application;
+use Rashydhc\ProdDeploy\DeployKernel;
+use Rashydhc\ProdDeploy\Support\Output;
+
+abstract class Command
+{
+    protected Application $app;
+
+    protected DeployKernel $kernel;
+
+    /** @var list<string> */
+    protected array $args;
+
+    public function __construct(Application $app, array $args)
+    {
+        $this->app = $app;
+        $this->kernel = new DeployKernel($app);
+        $this->args = $args;
+    }
+
+    abstract public function run(): int;
+
+    protected function hasFlag(string $flag): bool
+    {
+        return in_array($flag, $this->args, true);
+    }
+
+    /** @return list<string> */
+    protected function positionalArgs(): array
+    {
+        return array_values(array_filter(
+            $this->args,
+            static fn (string $arg): bool => ! str_starts_with($arg, '--')
+        ));
+    }
+}

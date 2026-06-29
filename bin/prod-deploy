@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') {
+    fwrite(STDERR, "prod-deploy must be run from the command line.\n");
+    exit(1);
+}
+
+$autoload = __DIR__.'/../vendor/autoload.php';
+if (! is_file($autoload)) {
+    fwrite(STDERR, "Run composer install in laravel-prod-deploy first.\n");
+    exit(1);
+}
+
+require $autoload;
+
+use Rashydhc\ProdDeploy\Console\Cli;
+
+exit(Cli::run($argv));

@@ -1,0 +1,7 @@
+# Never overwrite live server state
+.env
+.env.*
+/storage/app/public/**
+/storage/logs/**
+/bootstrap/cache/**
+/public/hot
