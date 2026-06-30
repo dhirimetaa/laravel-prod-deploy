@@ -8,13 +8,43 @@ if (PHP_SAPI !== 'cli') {
     exit(1);
 }
 
-$autoload = __DIR__.'/../vendor/autoload.php';
-if (! is_file($autoload)) {
-    fwrite(STDERR, "Run composer install in laravel-prod-deploy first.\n");
+/**
+ * Resolve Composer autoload when run as:
+ * - vendor/bin/prod-deploy in a consuming project (Composer sets _composer_autoload_path)
+ * - vendor/bin/prod-deploy during package development
+ * - php bin/prod-deploy directly from the package checkout
+ */
+function prodDeployResolveAutoload(): string
+{
+    $candidates = [];
+
+    if (! empty($GLOBALS['_composer_autoload_path']) && is_file($GLOBALS['_composer_autoload_path'])) {
+        $candidates[] = $GLOBALS['_composer_autoload_path'];
+    }
+
+    $candidates[] = __DIR__.'/../vendor/autoload.php';
+
+    $dir = dirname(__DIR__);
+    for ($i = 0; $i < 6; $i++) {
+        $candidates[] = $dir.'/vendor/autoload.php';
+        $parent = dirname($dir);
+        if ($parent === $dir) {
+            break;
+        }
+        $dir = $parent;
+    }
+
+    foreach (array_unique($candidates) as $path) {
+        if (is_file($path)) {
+            return $path;
+        }
+    }
+
+    fwrite(STDERR, "Could not find Composer autoload.php. Run composer install from your project root.\n");
     exit(1);
 }
 
-require $autoload;
+require prodDeployResolveAutoload();
 
 use Dhirimetaa\ProdDeploy\Console\Cli;
 

@@ -3,7 +3,7 @@
     "description": "Build prodfiles and deploy Laravel apps to shared hosting via SFTP (Windows-friendly)",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "homepage": "https://github.com/dhirimetaa/laravel-prod-deploy",
     "support": {
         "issues": "https://github.com/dhirimetaa/laravel-prod-deploy/issues",
