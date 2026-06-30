@@ -6,13 +6,9 @@
         "deploy:vendor-push": "prod-deploy vendor:push",
         "deploy:vendor-zip": "prod-deploy vendor:zip",
         "deploy:vendor-zip-push": "prod-deploy vendor:zip-push",
-        "deploy:migrate": "prod-deploy remote migrate --force",
-        "deploy:optimize": [
-            "prod-deploy remote config:cache",
-            "prod-deploy remote route:cache",
-            "prod-deploy remote view:cache"
-        ],
-        "deploy:artisan": "prod-deploy remote",
+        "deploy:migrate": "prod-deploy migrate",
+        "deploy:optimize": "prod-deploy optimize",
+        "deploy:artisan": "prod-deploy artisan",
         "deploy": [
             "@deploy:build",
             "@deploy:push"

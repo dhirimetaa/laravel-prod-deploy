@@ -101,10 +101,9 @@ Then:
 
 ```bash
 vendor/bin/prod-deploy push
-vendor/bin/prod-deploy remote migrate --force
-vendor/bin/prod-deploy remote config:cache
-vendor/bin/prod-deploy remote route:cache
-vendor/bin/prod-deploy remote view:cache
+vendor/bin/prod-deploy migrate
+vendor/bin/prod-deploy optimize
+vendor/bin/prod-deploy artisan config:cache
 ```
 
 ## 7. Routine deploys

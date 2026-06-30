@@ -24,7 +24,7 @@ flowchart LR
   prodfiles --> target
   appPush -->|SFTP incremental| appRoot
   vendorZip -->|single zip| appRoot
-  remoteCmd[prod-deploy remote] -->|SSH phpseclib| appRoot
+  remoteCmd[prod-deploy artisan] -->|SSH phpseclib| appRoot
 ```
 
 ## Build pipeline
@@ -81,7 +81,7 @@ No Windows interactive `ssh` password prompt — credentials come from the env f
 
 ## Remote artisan
 
-`prod-deploy remote migrate --force` opens an SSH session, `cd`s to `PROD_REMOTE_PATH`, and runs `php artisan ...` with escaped arguments.
+`prod-deploy artisan migrate --force` (or `prod-deploy migrate`) opens an SSH session, `cd`s to `PROD_REMOTE_PATH`, and runs `php artisan ...` with escaped arguments. Use `prod-deploy optimize` for config/route/view caching.
 
 ## Class layout
 

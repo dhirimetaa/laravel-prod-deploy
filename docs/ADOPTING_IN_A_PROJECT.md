@@ -80,7 +80,7 @@ deploy/.build-manifest.json
 ```bash
 vendor/bin/prod-deploy build --dry-run   # N/A for build; use normal build
 vendor/bin/prod-deploy push --dry-run
-vendor/bin/prod-deploy remote migrate --force
+vendor/bin/prod-deploy migrate
 ```
 
 ## ArPOS note

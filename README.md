@@ -11,7 +11,9 @@ vendor/bin/prod-deploy init
 vendor/bin/prod-deploy build
 vendor/bin/prod-deploy vendor:zip-push   # first deploy: extract vendor.zip on server
 vendor/bin/prod-deploy push
-vendor/bin/prod-deploy remote migrate --force
+vendor/bin/prod-deploy migrate
+vendor/bin/prod-deploy optimize
+vendor/bin/prod-deploy artisan queue:restart
 ```
 
 ## Local development (path repository)

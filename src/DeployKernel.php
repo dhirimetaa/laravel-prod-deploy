@@ -523,7 +523,30 @@ final class DeployKernel
         return $exitCode === false ? 0 : (int) $exitCode;
     }
 
-    /** @param array<string, string> $toUpload */
+    /** @param list<string> $args */
+    public function runRemoteArtisan(array $args): int
+    {
+        if ($args === []) {
+            Output::fail('Usage: prod-deploy artisan <command> [options]');
+        }
+
+        $env = $this->loadDeployEnv();
+        $remotePath = rtrim(str_replace('\\', '/', $env['PROD_REMOTE_PATH']), '/');
+        $artisanCommand = 'php artisan '.implode(' ', array_map('escapeshellarg', $args));
+
+        Output::info('Running remote: php artisan '.implode(' ', $args));
+
+        $ssh = $this->connectSsh($env);
+        $exitCode = $this->runRemoteShell($ssh, $remotePath, $artisanCommand);
+
+        if ($exitCode !== 0) {
+            Output::fail("Remote command failed with exit code {$exitCode}.");
+        }
+
+        return 0;
+    }
+
+    /** @param list<string> $toUpload */
     public function uploadFiles(SFTP $sftp, string $prodfiles, string $remoteBase, array $toUpload): int
     {
         $total = count($toUpload);

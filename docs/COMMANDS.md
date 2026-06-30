@@ -110,24 +110,69 @@ Recommended for first deploy and large vendor refreshes.
 
 ---
 
-## `remote`
+## `artisan`
 
 Run artisan on production via SSH (phpseclib).
 
 ```bash
-prod-deploy remote <artisan-args...>
+prod-deploy artisan <command> [options...]
 ```
 
 Examples:
 
 ```bash
-prod-deploy remote migrate --force
-prod-deploy remote config:cache
-prod-deploy remote queue:restart
-prod-deploy remote tinker --execute="echo 1;"
+prod-deploy artisan migrate --force
+prod-deploy artisan config:cache
+prod-deploy artisan queue:restart
+prod-deploy artisan tinker --execute="echo 1;"
 ```
 
 Arguments are shell-escaped before remote execution.
+
+---
+
+## `migrate`
+
+Shortcut for `artisan migrate --force` on production.
+
+```bash
+prod-deploy migrate [-- extra-artisan-args...]
+```
+
+Examples:
+
+```bash
+prod-deploy migrate
+prod-deploy migrate --seed
+```
+
+Always includes `--force` (required for production migrations).
+
+---
+
+## `optimize`
+
+Run Laravel production cache commands on the server.
+
+```bash
+prod-deploy optimize
+```
+
+Runs remotely, in order:
+
+1. `config:cache`
+2. `route:cache`
+3. `view:cache`
+
+---
+
+## `remote`
+
+Alias for `artisan` (kept for backward compatibility).
+
+```bash
+prod-deploy remote <artisan-args...>
+```
 
 ---
 
