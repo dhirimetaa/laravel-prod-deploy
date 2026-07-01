@@ -10,6 +10,14 @@ final class TerminalCommand extends Command
 {
     public function run(): int
     {
+        if (! stream_isatty(STDIN)) {
+            Output::fail(
+                "Interactive terminal needs a real TTY — composer deploy:terminal often cannot read input on Windows.\n".
+                "Run directly instead:\n".
+                '  vendor/bin/prod-deploy terminal'
+            );
+        }
+
         $env = $this->kernel->loadDeployEnv();
         $remotePath = rtrim(str_replace('\\', '/', $env['PROD_REMOTE_PATH']), '/');
 
@@ -22,12 +30,20 @@ final class TerminalCommand extends Command
         while (true) {
             echo 'remote> ';
             $line = fgets(STDIN);
+
             if ($line === false) {
+                Output::info('Input closed.');
+
                 break;
             }
 
             $line = trim($line);
-            if ($line === '' || in_array(strtolower($line), ['exit', 'quit'], true)) {
+
+            if ($line === '') {
+                continue;
+            }
+
+            if (in_array(strtolower($line), ['exit', 'quit'], true)) {
                 break;
             }
 

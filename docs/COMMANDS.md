@@ -199,8 +199,10 @@ prod-deploy remote <artisan-args...>
 Interactive SSH shell scoped to `PROD_REMOTE_PATH`.
 
 ```bash
-prod-deploy terminal
+vendor/bin/prod-deploy terminal
 ```
+
+On **Windows**, run the command above directly. `composer deploy:terminal` often cannot attach stdin (TTY) and will exit immediately.
 
 ```
 remote> ls -la
