@@ -24,9 +24,11 @@ final class ScriptRegistrar
             'deploy:vendor-zip' => [$timeout, 'prod-deploy vendor:zip'],
             'deploy:vendor-zip-push' => [$timeout, 'prod-deploy vendor:zip-push'],
             'deploy:vendor-zip-push:dry' => 'prod-deploy vendor:zip-push --dry-run',
+            'deploy:vendor-extract' => [$timeout, 'prod-deploy vendor:extract'],
             'deploy:migrate' => [$timeout, 'prod-deploy migrate'],
             'deploy:optimize' => [$timeout, 'prod-deploy optimize'],
             'deploy:artisan' => [$timeout, 'prod-deploy artisan'],
+            'deploy:terminal' => [$timeout, 'prod-deploy terminal'],
             'deploy' => [$timeout, '@deploy:build', '@deploy:push'],
         ];
     }

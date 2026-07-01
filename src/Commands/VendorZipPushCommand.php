@@ -33,7 +33,8 @@ final class VendorZipPushCommand extends Command
                 Output::info(count($vendorPending).' vendor file(s) changed since last push.');
             }
             Output::info('Would upload: vendor.zip ('.$vendorFileCount.' files inside)');
-            echo '  server: '.$this->kernel->vendorExtractInstructions($remoteBase).PHP_EOL;
+            echo '  then extract on server (vendor → vendor-old, unzip, remove zip)'.PHP_EOL;
+            $this->kernel->extractVendorZipOnServer($this->hasFlag('--cleanup-old'), true);
 
             return 0;
         }
@@ -57,8 +58,14 @@ final class VendorZipPushCommand extends Command
         $localFiles = $this->kernel->collectFiles($prodfiles, $excludePatterns);
 
         $this->kernel->savePushManifest($previousManifest, $vendorHashes, $localFiles, $remoteBase, 'vendor zip push');
-        Output::info('Vendor zip push complete. Extract on the server before using the app:');
-        Output::info('  '.$this->kernel->vendorExtractInstructions($remoteBase));
+
+        if ($this->hasFlag('--no-extract')) {
+            Output::info('Skipped remote extract (--no-extract). Run: prod-deploy vendor:extract');
+
+            return 0;
+        }
+
+        $this->kernel->extractVendorZipOnServer($this->hasFlag('--cleanup-old'));
 
         return 0;
     }

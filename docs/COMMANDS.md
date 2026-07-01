@@ -94,19 +94,37 @@ Does not upload. Use before manual FileZilla upload or `vendor:zip-push`.
 
 ## `vendor:zip-push`
 
-Build vendor zip and upload as single file to server root.
+Build vendor zip, upload, and **extract on the server automatically**.
 
 ```bash
-prod-deploy vendor:zip-push [--dry-run] [--full]
+prod-deploy vendor:zip-push [--dry-run] [--full] [--no-extract] [--cleanup-old]
 ```
 
-After upload, extract on server:
+| Flag | Description |
+|------|-------------|
+| `--no-extract` | Upload only — skip remote extract |
+| `--cleanup-old` | Delete `vendor-old/` after successful extract |
 
-```bash
-cd $PROD_REMOTE_PATH && unzip -o vendor.zip && rm vendor.zip
-```
+**Remote steps (automatic):**
+
+1. Delete existing `vendor-old/` if present
+2. Rename `vendor/` → `vendor-old/`
+3. Extract `vendor.zip` (`unzip` or PHP `ZipArchive` fallback)
+4. Remove `vendor.zip`
 
 Recommended for first deploy and large vendor refreshes.
+
+---
+
+## `vendor:extract`
+
+Extract an existing `vendor.zip` on the server (without re-uploading).
+
+```bash
+prod-deploy vendor:extract [--dry-run] [--cleanup-old]
+```
+
+Use if upload succeeded but extract failed, or after manual zip upload.
 
 ---
 
@@ -173,6 +191,26 @@ Alias for `artisan` (kept for backward compatibility).
 ```bash
 prod-deploy remote <artisan-args...>
 ```
+
+---
+
+## `terminal`
+
+Interactive SSH shell scoped to `PROD_REMOTE_PATH`.
+
+```bash
+prod-deploy terminal
+```
+
+```
+remote> ls -la
+remote> php artisan --version
+remote> exit
+```
+
+Each command runs as `cd PROD_REMOTE_PATH && <your command>`. Shell operators (`;`, `|`, `&`) and `cd` are blocked for safety. Type `exit` or `quit` to leave.
+
+Composer alias: `composer deploy:terminal`
 
 ---
 

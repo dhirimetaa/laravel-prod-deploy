@@ -372,7 +372,102 @@ final class DeployKernel
 
     public function vendorExtractInstructions(string $remoteBase): string
     {
-        return "cd {$remoteBase} && unzip -o vendor.zip && rm vendor.zip";
+        return 'prod-deploy vendor:extract  (or automatic after vendor:zip-push)';
+    }
+
+    public function buildVendorExtractShellCommand(bool $cleanupOld = false): string
+    {
+        $phpExtract = 'php -r '.escapeshellarg(
+            '$z=new ZipArchive;if($z->open("vendor.zip")!==true){fwrite(STDERR,"Could not open vendor.zip\n");exit(1);}$z->extractTo(".");$z->close();'
+        );
+
+        $steps = [
+            'if [ -d vendor-old ]; then rm -rf vendor-old; fi',
+            'if [ -d vendor ]; then mv vendor vendor-old; fi',
+            'if [ ! -f vendor.zip ]; then echo "vendor.zip not found in $(pwd)" >&2; exit 1; fi',
+            'if command -v unzip >/dev/null 2>&1; then unzip -o vendor.zip; else '.$phpExtract.'; fi',
+            'rm -f vendor.zip',
+        ];
+
+        if ($cleanupOld) {
+            $steps[] = 'rm -rf vendor-old';
+        }
+
+        return implode(' && ', $steps);
+    }
+
+    public function extractVendorZipOnServer(bool $cleanupOld = false, bool $dryRun = false): void
+    {
+        $env = $this->loadDeployEnv();
+        $remotePath = rtrim(str_replace('\\', '/', $env['PROD_REMOTE_PATH']), '/');
+        $shell = $this->buildVendorExtractShellCommand($cleanupOld);
+
+        if ($dryRun) {
+            Output::info('Would extract vendor.zip on server at: '.$remotePath);
+            echo '  cd '.escapeshellarg($remotePath).' && '.$shell.PHP_EOL;
+
+            return;
+        }
+
+        Output::info('Extracting vendor.zip on server (vendor → vendor-old, then unzip)...');
+        $ssh = $this->connectSsh($env);
+        $exitCode = $this->runRemoteShell($ssh, $remotePath, $shell);
+
+        if ($exitCode !== 0) {
+            Output::fail(
+                "Remote vendor extract failed (exit {$exitCode}). ".
+                'Previous vendor/ may be in vendor-old/. Fix the issue and run: prod-deploy vendor:extract'
+            );
+        }
+
+        Output::info('Vendor extracted on server successfully.');
+    }
+
+    public function validateTerminalCommand(string $command): ?string
+    {
+        $command = trim($command);
+
+        if ($command === '') {
+            return 'Empty command.';
+        }
+
+        if (preg_match('/^\s*cd\s+/i', $command)) {
+            return 'cd is not allowed — you are always in PROD_REMOTE_PATH.';
+        }
+
+        foreach (["\n", "\r", ';', '|', '&', '`'] as $blocked) {
+            if (str_contains($command, $blocked)) {
+                return 'Command contains a blocked character or operator. Run one simple command at a time.';
+            }
+        }
+
+        if (preg_match('/\$\(/', $command)) {
+            return 'Command substitution is not allowed.';
+        }
+
+        return null;
+    }
+
+    public function assertSafeTerminalCommand(string $command): string
+    {
+        $error = $this->validateTerminalCommand($command);
+        if ($error !== null) {
+            Output::fail($error);
+        }
+
+        return trim($command);
+    }
+
+    public function runRemoteTerminalCommand(SSH2 $ssh, string $remotePath, string $command): int
+    {
+        $command = $this->assertSafeTerminalCommand($command);
+        $exitCode = $this->runRemoteShell($ssh, $remotePath, $command);
+
+        if ($exitCode !== 0) {
+            Output::info("Exit code: {$exitCode}");
+        }
+
+        return $exitCode;
     }
 
     /** @return array{files: array<string, string>, uploaded_at?: string, remote_path?: string} */

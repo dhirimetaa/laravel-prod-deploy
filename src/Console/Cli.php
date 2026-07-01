@@ -13,6 +13,8 @@ use Dhirimetaa\ProdDeploy\Commands\OptimizeCommand;
 use Dhirimetaa\ProdDeploy\Commands\PushCommand;
 use Dhirimetaa\ProdDeploy\Commands\PushTargetCommand;
 use Dhirimetaa\ProdDeploy\Commands\RemoteCommand;
+use Dhirimetaa\ProdDeploy\Commands\TerminalCommand;
+use Dhirimetaa\ProdDeploy\Commands\VendorExtractCommand;
 use Dhirimetaa\ProdDeploy\Commands\VendorPushCommand;
 use Dhirimetaa\ProdDeploy\Commands\VendorZipCommand;
 use Dhirimetaa\ProdDeploy\Commands\VendorZipPushCommand;
@@ -27,10 +29,12 @@ final class Cli
         'vendor:push' => VendorPushCommand::class,
         'vendor:zip' => VendorZipCommand::class,
         'vendor:zip-push' => VendorZipPushCommand::class,
+        'vendor:extract' => VendorExtractCommand::class,
         'artisan' => ArtisanCommand::class,
         'migrate' => MigrateCommand::class,
         'optimize' => OptimizeCommand::class,
         'remote' => RemoteCommand::class,
+        'terminal' => TerminalCommand::class,
         'init' => InitCommand::class,
     ];
 
@@ -94,10 +98,12 @@ Commands:
   push:target        Push specific paths (hotfix)
   vendor:push        Incremental vendor file push
   vendor:zip         Create deploy/vendor.zip locally
-  vendor:zip-push    Upload vendor as single zip
+  vendor:zip-push    Upload vendor zip and extract on server
+  vendor:extract     Extract existing vendor.zip on server
   artisan            Run artisan on production via SSH
   migrate            Remote migrate --force (shortcut)
   optimize           Remote config:cache, route:cache, view:cache
+  terminal           Interactive shell in PROD_REMOTE_PATH
   remote             Alias for artisan (deprecated)
   init               Scaffold deploy/ in the consuming project
 
@@ -106,10 +112,14 @@ Options (per command):
   push               [--dry-run] [--full]
   push:target        [--dry-run] [--allow-vendor] -- <paths...>
   vendor:push        [--dry-run] [--full]
-  vendor:zip-push    [--dry-run] [--full]
+  vendor:zip-push    [--dry-run] [--full] [--no-extract] [--cleanup-old]
+  vendor:extract     [--dry-run] [--cleanup-old]
   init               [--force]
 
 Examples:
+  prod-deploy vendor:zip-push
+  prod-deploy vendor:extract
+  prod-deploy terminal
   prod-deploy artisan migrate --force
   prod-deploy migrate
   prod-deploy optimize
