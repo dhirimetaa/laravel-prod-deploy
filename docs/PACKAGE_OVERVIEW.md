@@ -39,7 +39,7 @@ Deploying Laravel from **Windows** to **shared hosting** (cPanel, limited SSH) i
 
 - Not a CI/CD platform — run commands locally or wire into your own pipeline
 - Not a zero-downtime blue/green deployer — suited to single-server shared hosting
-- Not a Composer plugin — add script aliases manually from `stubs/composer-scripts.json`
+- Composer plugin auto-registers `deploy:*` scripts on install (allow plugin when prompted)
 
 ## Package vs project files
 

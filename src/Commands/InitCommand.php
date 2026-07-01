@@ -66,7 +66,7 @@ final class InitCommand extends Command
         }
 
         Output::info('Init complete. Edit deploy/deploy.env with your SSH details.');
-        Output::info('Optional: add composer scripts from stubs/composer-scripts.json');
+        Output::info('Composer deploy:* scripts are registered automatically by the package plugin.');
 
         return 0;
     }

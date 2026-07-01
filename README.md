@@ -6,15 +6,17 @@ Build a production-ready `prodfiles/` staging directory and deploy Laravel appli
 
 ```bash
 composer require --dev dhirimetaa/laravel-prod-deploy
+# Allow plugin when prompted, then:
 vendor/bin/prod-deploy init
 # Edit deploy/deploy.env with SSH credentials
-vendor/bin/prod-deploy build
-vendor/bin/prod-deploy vendor:zip-push   # first deploy: extract vendor.zip on server
-vendor/bin/prod-deploy push
-vendor/bin/prod-deploy migrate
-vendor/bin/prod-deploy optimize
-vendor/bin/prod-deploy artisan queue:restart
+composer deploy:build
+composer deploy:vendor-zip-push   # first deploy: extract vendor.zip on server
+composer deploy:push
+composer deploy:migrate
+composer deploy:optimize
 ```
+
+The Composer plugin registers `deploy:*` scripts automatically on install (enable the plugin when Composer asks).
 
 ## Local development (path repository)
 
@@ -37,7 +39,17 @@ In your Laravel project's `composer.json`:
 
 ## Composer script aliases
 
-Copy the snippet from `stubs/composer-scripts.json` into your project's `composer.json` to use familiar `composer deploy:*` commands.
+Registered **automatically** by the Composer plugin on `composer require` / `composer update`. Enable the plugin when prompted:
+
+```json
+"config": {
+    "allow-plugins": {
+        "dhirimetaa/laravel-prod-deploy": true
+    }
+}
+```
+
+Reference copy (manual fallback): `stubs/composer-scripts.json`
 
 ## Documentation
 

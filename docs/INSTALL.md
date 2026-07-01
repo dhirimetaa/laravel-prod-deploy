@@ -2,11 +2,29 @@
 
 ## 1. Require the package
 
-From Packagist (when published):
+From Packagist or GitHub:
 
 ```bash
 composer require --dev dhirimetaa/laravel-prod-deploy
 ```
+
+When prompted, **allow the Composer plugin**:
+
+```
+Do you trust "dhirimetaa/laravel-prod-deploy" to execute code and wish to enable its plugins? [y/n]
+```
+
+Or add to your project's `composer.json` beforehand:
+
+```json
+"config": {
+    "allow-plugins": {
+        "dhirimetaa/laravel-prod-deploy": true
+    }
+}
+```
+
+On install/update, the plugin **automatically adds** `deploy:*` scripts to your `composer.json` (only missing ones — existing scripts are never overwritten).
 
 ### Local path repository (development)
 
@@ -29,7 +47,15 @@ If the package lives at `../laravel-prod-deploy` relative to your Laravel app:
 
 Then run `composer update dhirimetaa/laravel-prod-deploy`.
 
-## 2. Initialize deploy config
+## 2. Composer scripts (automatic)
+
+After install, these are registered in your `composer.json` if not already present:
+
+- `composer deploy:build`, `deploy:push`, `deploy:migrate`, `deploy:optimize`, `deploy:artisan`, etc.
+
+Manual copy from `stubs/composer-scripts.json` is only needed if you disabled the plugin.
+
+## 3. Initialize deploy config
 
 From your Laravel project root:
 
@@ -51,7 +77,7 @@ Also appends gitignore entries for `prodfiles/`, secrets, and manifests.
 
 Use `--force` to overwrite existing files.
 
-## 3. Configure SSH
+## 4. Configure SSH
 
 Edit `deploy/deploy.env`:
 
@@ -65,10 +91,6 @@ PROD_SSH_PASSWORD=your_password
 # or
 PROD_SSH_KEY=C:/Users/You/.ssh/id_rsa
 ```
-
-## 4. Optional: Composer script aliases
-
-Merge `vendor/dhirimetaa/laravel-prod-deploy/stubs/composer-scripts.json` (or copy from the package repo) into your project's `composer.json` `scripts` section.
 
 ## 5. Server one-time setup
 
