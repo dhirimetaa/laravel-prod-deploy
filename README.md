@@ -60,6 +60,7 @@ Reference copy (manual fallback): `stubs/composer-scripts.json`
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Build/push flow, manifests, prodfiles |
 | [COMMANDS.md](docs/COMMANDS.md) | Every CLI command and flag |
 | [CONFIGURATION.md](docs/CONFIGURATION.md) | deploy.env, config.php, excludes |
+| [SERVER_SETUP.md](docs/SERVER_SETUP.md) | Storage dirs, chmod/chown, .htaccess 644, folders 755 |
 | [ADOPTING_IN_A_PROJECT.md](docs/ADOPTING_IN_A_PROJECT.md) | Migrating from local deploy/ scripts |
 
 ## Requirements

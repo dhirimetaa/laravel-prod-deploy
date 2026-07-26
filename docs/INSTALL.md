@@ -104,6 +104,8 @@ php artisan key:generate
 php artisan storage:link
 ```
 
+Then set **storage / cache permissions**, **`.htaccess` → 644**, and **folders → 755**. Full guide: [SERVER_SETUP.md](SERVER_SETUP.md).
+
 Point cPanel document root to `PROD_REMOTE_PATH/public`.
 
 ## 6. First deploy
