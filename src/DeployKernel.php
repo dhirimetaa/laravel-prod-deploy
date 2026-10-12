@@ -130,6 +130,7 @@ final class DeployKernel
     /** @param list<string> $command */
     public function runProcess(array $command, ?string $cwd = null, bool $allowFailure = false): int
     {
+        $command[0] = $this->resolveExecutable($command[0]);
         $cmd = implode(' ', array_map(static fn (string $p): string => escapeshellarg($p), $command));
         Output::info("running {$cmd}".($cwd ? " (in {$cwd})" : ''));
 
@@ -292,8 +293,37 @@ final class DeployKernel
     }
 
     /** @return list<string> */
+    /**
+     * On Windows, give a bare command (npm, bun, composer) by its full path. cmd.exe runs the
+     * quoted command line, and a quoted .cmd/.bat found on PATH gets the wrong %~dp0, so it cannot
+     * find its own files ("Cannot find module ...\node_modules\npm\bin\npm-cli.js").
+     */
+    public function resolveExecutable(string $command): string
+    {
+        if (PHP_OS_FAMILY !== 'Windows' || str_contains($command, '/') || str_contains($command, '\\')) {
+            return $command;
+        }
+
+        $found = (string) shell_exec('where '.escapeshellarg($command).' 2>NUL');
+
+        foreach (preg_split('/\R/', trim($found)) ?: [] as $path) {
+            if (preg_match('/\.(exe|cmd|bat|com)$/i', $path) === 1 && is_file($path)) {
+                return $path;
+            }
+        }
+
+        return $command;
+    }
+
     public function composerCommand(array $args): array
     {
+        // Composer sets this to the running composer.phar when it runs scripts (composer deploy:build).
+        $running = getenv('COMPOSER_BINARY');
+
+        if ($running && is_file($running) && str_ends_with(strtolower($running), '.phar')) {
+            return array_merge([PHP_BINARY, $running], $args);
+        }
+
         $candidates = [
             'C:/laragon/bin/composer/composer.phar',
             getenv('LOCALAPPDATA').'/ComposerSetup/bin/composer.phar',
