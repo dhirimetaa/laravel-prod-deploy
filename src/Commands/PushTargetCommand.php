@@ -32,7 +32,7 @@ final class PushTargetCommand extends Command
         $toUpload = [];
 
         foreach ($targets as $target) {
-            $relative = $this->kernel->normalizePath(ltrim($target, './\\'));
+            $relative = $this->kernel->normalizeTargetPath($target);
 
             if ($relative === '' || str_contains($relative, '..')) {
                 Output::fail("Invalid path: {$target}");

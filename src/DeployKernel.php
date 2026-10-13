@@ -24,6 +24,21 @@ final class DeployKernel
         return str_replace('\\', '/', $path);
     }
 
+    /**
+     * A push:target argument as a project-relative path: drops a leading "./" (or ".\") and
+     * slashes, but keeps the dot of dotfiles such as .env.example or .user.ini.
+     */
+    public function normalizeTargetPath(string $target): string
+    {
+        $path = $this->normalizePath($target);
+
+        while (str_starts_with($path, './')) {
+            $path = substr($path, 2);
+        }
+
+        return ltrim($path, '/');
+    }
+
     public function relativePath(string $absolutePath, string $root): string
     {
         $absolutePath = $this->normalizePath(realpath($absolutePath) ?: $absolutePath);

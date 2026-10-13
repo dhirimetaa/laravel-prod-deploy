@@ -11,6 +11,14 @@ final class PathsTest extends TestCaseBase
         $this->assertSame('app/Models/User.php', $this->kernel->normalizePath('app\\Models\\User.php'));
     }
 
+    public function test_target_paths_keep_the_dot_of_dotfiles(): void
+    {
+        $this->assertSame('.env.example', $this->kernel->normalizeTargetPath('.env.example'));
+        $this->assertSame('.env.example', $this->kernel->normalizeTargetPath('./.env.example'));
+        $this->assertSame('public/.htaccess', $this->kernel->normalizeTargetPath('.\public\.htaccess'));
+        $this->assertSame('app/Models/User.php', $this->kernel->normalizeTargetPath('/app/Models/User.php'));
+    }
+
     public function test_relative_path_from_project_root(): void
     {
         $file = $this->projectRoot.'/app/Models/User.php';
